@@ -23,16 +23,16 @@ spec:
         
   # 5. FIX: Correctly nested strategy
   strategy:
-    canary: 
-      stableService: my-backend-stable
-      canaryService: my-backend-canary
+    canary:
+      stableService: my-backend-stable # <-- Service that points to stable pods
+      canaryService: my-backend-canary # <-- Service that points to canary pods
       
       trafficRouting:
         istio:
           virtualService:
             name: my-backend-vs
             routes:
-              - primary 
+              - primary
 
       steps:
       - setWeight: 10

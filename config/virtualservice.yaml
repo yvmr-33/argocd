@@ -8,17 +8,17 @@ spec:
   hosts:
     - "*" 
   gateways:
-    - istio-system/my-gateway # Verify this gateway exists and is correct
+    - istio-system/my-gateway # Check this name
   http:
-    - name: primary # <--- CRITICAL FIX: Add the route name 'primary'
+    - name: primary # CRITICAL: The route name must be 'primary'
       route:
-        # Initially, this is a standard route pointing to your service. 
-        # Argo Rollouts will dynamically modify this 'route' block.
+        # Destination 1: The Stable version (initially 100% traffic)
         - destination:
-            host: my-backend-service
-            subset: stable
+            host: my-backend-service 
+            subset: stable          # <-- References the subset defined in DestinationRule
           weight: 100 
+        # Destination 2: The Canary version (Rollouts will increase this weight)
         - destination:
             host: my-backend-service
-            subset: canary
+            subset: canary          # <-- References the subset defined in DestinationRule
           weight: 0

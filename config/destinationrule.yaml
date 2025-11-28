@@ -5,11 +5,11 @@ metadata:
   name: my-backend-rule
   namespace: staging
 spec:
-  host: my-backend-service # Must match the Kubernetes Service name (e.g., 'aa' from before)
+  host: my-backend-service # <--- VERIFY this matches the host in VirtualService
   subsets:
     - name: stable
       labels:
-        app: backend # Match the Pod label for the stable version
+        app: backend 
     - name: canary
       labels:
-        app: backend # Match the Pod label for the canary version
+        app: backend
