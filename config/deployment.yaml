@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aa1
+  name: a
   # *** FIX 1: ADD NAMESPACE ***
   namespace: staging # Use the namespace you intend to deploy into
   labels:
