@@ -3,17 +3,18 @@ apiVersion: v1
 kind: Service
 metadata:
   name: aa
+  # *** FIX 1: ADD NAMESPACE ***
+  namespace: staging # Use the same namespace as your Deployment
   labels:
-    app: node-backend-app # Matches the high-level label on your Deployment
+    app: node-backend-app
 spec:
-  # CRITICAL: This selector must match the Pod labels in your Deployment's template
+  # This selector must match the Pod labels (app: backend) in your Deployment
   selector:
     app: backend
   
-  # NodePort is best for Minikube as it exposes the service externally
+  # NodePort exposes the service externally via a high-numbered port on the node
   type: NodePort
   ports:
     - protocol: TCP
-      port: 80       # The port the Service listens on internally
-      # CRITICAL: targetPort must match the containerPort (3001)
-      targetPort: 3000
+      port: 80       # Port the Service listens on (Cluster-Internal access)
+      targetPort: 3000 # Port the container is listening on (Must match your app)
