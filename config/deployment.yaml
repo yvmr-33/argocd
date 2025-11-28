@@ -3,14 +3,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: aa1
+  # *** FIX 1: ADD NAMESPACE ***
+  namespace: staging # Use the namespace you intend to deploy into
   labels:
     app: node-backend-app
 spec:
   replicas: 1
   selector:
-
     matchLabels:
-      app: backend
+      app: backend # This label must match the label in the template
   template:
     metadata:
       labels:
@@ -18,9 +19,8 @@ spec:
     spec:
       containers:
       - name: node-backend-container
-        # image: docker.io/nitishkumar24/my2-backend:v1.0
-        # image: localhost/m1:latest
-        image: docker.io/yvmr/argocd1
+        # *** VERIFICATION: USE EXPLICIT TAG ***
+        image: docker.io/yvmr/argocd1:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
