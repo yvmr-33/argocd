@@ -4,7 +4,7 @@ metadata:
   name: my-backend-rollout
   namespace: staging # 1. FIX: Explicit Namespace
 spec:
-  replicas: 5
+  replicas: 6
   selector:
     matchLabels:
       app: backend # 2. FIX: Selector key
