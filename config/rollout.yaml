@@ -1,0 +1,42 @@
+# rollout.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: my-backend-rollout
+  namespace: staging
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: node-backend-container
+          # This is your current STABLE image
+          image: docker.io/yvmr/argocd1:v1.0.0 
+          ports:
+            - containerPort: 3000
+
+  # 👇 1. DEFINE THE STRATEGY
+  strategy:
+    canary:
+      # 👇 2. TELL ROLLOUTS TO USE ISTIO
+      trafficRouting:
+        istio:
+          virtualService:
+            name: my-backend-vs # Name of your VirtualService
+            routes:
+              - primary # The primary route in your VirtualService
+          # service: my-backend-service # Optional, for managing K8s Service
+
+      # 👇 3. DEFINE THE STEP-BY-STEP ROLLOUT
+      steps:
+      - setWeight: 10 # Send 10% traffic to the new (Canary) version
+      - pause: { duration: 60s } # Pause for observation
+      - setWeight: 50 # Send 50% traffic
+      - pause: { duration: 60s } # Pause again
+      - setWeight: 100 # Promote to 100% (Final step)

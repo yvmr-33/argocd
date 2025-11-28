@@ -1,0 +1,21 @@
+# virtualservice.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: my-backend-vs
+  namespace: staging
+spec:
+  hosts:
+    - "*" # Or your specific domain/gateway host
+  gateways:
+    - istio-system/my-gateway # Use your gateway name
+  http:
+    - route:
+        - destination:
+            host: my-backend-service
+            subset: stable
+          weight: 100 # Argo Rollouts will dynamically change this weight
+        - destination:
+            host: my-backend-service
+            subset: canary
+          weight: 0   # Argo Rollouts will dynamically change this weight

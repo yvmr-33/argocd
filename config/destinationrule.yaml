@@ -1,0 +1,15 @@
+# destinationrule.yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: my-backend-rule
+  namespace: staging
+spec:
+  host: my-backend-service # Must match the Kubernetes Service name (e.g., 'aa' from before)
+  subsets:
+    - name: stable
+      labels:
+        app: backend # Match the Pod label for the stable version
+    - name: canary
+      labels:
+        app: backend # Match the Pod label for the canary version
