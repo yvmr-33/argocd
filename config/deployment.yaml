@@ -8,7 +8,7 @@ metadata:
   labels:
     app: node-backend-app
 spec:
-  replicas: 2
+  replicas: 6
   selector:
     matchLabels:
       app: backend # This label must match the label in the template
