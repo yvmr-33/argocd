@@ -1,4 +1,4 @@
-# Corrected virtualservice.yaml
+# Corrected virtualservice.yaml (Final)
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -8,17 +8,16 @@ spec:
   hosts:
     - "*" 
   gateways:
-    - istio-system/my-gateway # Check this name
+    - istio-system/my-gateway # Verify this gateway exists
   http:
-    - name: primary # CRITICAL: The route name must be 'primary'
+    - name: primary
       route:
-        # Destination 1: The Stable version (initially 100% traffic)
+        # 1. FIX: Host must be the stableService name
         - destination:
-            host: my-backend-service 
-            subset: stable          # <-- References the subset defined in DestinationRule
+            host: my-backend-stable 
+            # Subsets are optional here but often removed for clarity
           weight: 100 
-        # Destination 2: The Canary version (Rollouts will increase this weight)
+        # 2. FIX: Host must be the canaryService name
         - destination:
-            host: my-backend-service
-            subset: canary          # <-- References the subset defined in DestinationRule
+            host: my-backend-canary
           weight: 0
