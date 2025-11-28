@@ -1,5 +1,3 @@
-# Corrected rollout.yaml structure
-
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -10,13 +8,18 @@ spec:
   replicas: 5
   selector:
     matchLabels:
-      app: backend
+      # 👇 1. Selector defines the key/value pair
+      app: backend 
   template:
-# ... (rest of template: labels, containers, image, ports)
+    metadata:
+      # 👇 2. Template MUST include the exact matching key/value pair
+      labels:
+        app: backend 
+    spec:
+      containers:
+      # ... (rest of the containers spec)
 
-  # 👇 THIS IS WHERE THE FIX IS NEEDED!
   strategy:
-    # 🛑 The strategy definition MUST be nested here
     canary: 
       # The fields defining the strategy must be placed directly here
       stableService: my-backend-stable
