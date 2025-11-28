@@ -1,0 +1,26 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aa1
+  labels:
+    app: node-backend-app
+spec:
+  replicas: 1
+  selector:
+
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: node-backend-container
+        # image: docker.io/nitishkumar24/my2-backend:v1.0
+        # image: localhost/m1:latest
+        image: docker.io/yvmr/argocd1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000

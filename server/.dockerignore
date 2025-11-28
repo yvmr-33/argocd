@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+npm-debug.log
+.npm
+
+# Build/Configuration Files
+npm-shrinkwrap.json
+yarn.lock
+package-lock.json
+
+# Environment/OS Files
+.env
+.git
+.gitignore
+.dockerignore
+.vscode
+.idea
+*.log
+Thumbs.db

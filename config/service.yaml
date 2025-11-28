@@ -1,0 +1,19 @@
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: aa
+  labels:
+    app: node-backend-app # Matches the high-level label on your Deployment
+spec:
+  # CRITICAL: This selector must match the Pod labels in your Deployment's template
+  selector:
+    app: backend
+  
+  # NodePort is best for Minikube as it exposes the service externally
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 80       # The port the Service listens on internally
+      # CRITICAL: targetPort must match the containerPort (3001)
+      targetPort: 3000
