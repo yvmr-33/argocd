@@ -22,15 +22,18 @@ spec:
             - containerPort: 3000
 
   # 👇 1. DEFINE THE STRATEGY
-  strategy:
+strategy:
     canary:
-      # 👇 2. TELL ROLLOUTS TO USE ISTIO
+      # 👇 ADD THESE TWO SERVICE FIELDS
+      stableService: my-backend-stable
+      canaryService: my-backend-canary
+
       trafficRouting:
         istio:
           virtualService:
-            name: my-backend-vs # Name of your VirtualService
+            name: my-backend-vs
             routes:
-              - primary # The primary route in your VirtualService
+              - primary# The primary route in your VirtualService
           # service: my-backend-service # Optional, for managing K8s Service
 
       # 👇 3. DEFINE THE STEP-BY-STEP ROLLOUT
