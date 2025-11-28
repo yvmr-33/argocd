@@ -2,26 +2,28 @@ apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: my-backend-rollout
-  namespace: staging
-# ... (rest of metadata)
+  namespace: staging # 1. FIX: Explicit Namespace
 spec:
   replicas: 5
   selector:
     matchLabels:
-      # 👇 1. Selector defines the key/value pair
-      app: backend 
+      app: backend # 2. FIX: Selector key
   template:
     metadata:
-      # 👇 2. Template MUST include the exact matching key/value pair
       labels:
-        app: backend 
+        app: backend # 3. FIX: Matching Template Label
     spec:
-      containers:
-      # ... (rest of the containers spec)
-
+      # 👇 4. FIX: Containers specification (Required Value)
+      containers: 
+      - name: node-backend-container
+        image: docker.io/yvmr/argocd1:latest # Ensure this image exists
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        
+  # 5. FIX: Correctly nested strategy
   strategy:
     canary: 
-      # The fields defining the strategy must be placed directly here
       stableService: my-backend-stable
       canaryService: my-backend-canary
       
