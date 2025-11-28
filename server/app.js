@@ -4,7 +4,7 @@ const app = express();
 const port = 3000; // Define the port
 
 app.get('/', (req, res) => {
-  res.send('Hello from mahesh nodejs server via local image  (via Podman)!');
+  res.send('Hello from  hbhdbc mahesh nodejs server via local image  (via Podman)!');
 });
 app.get('/new', (req, res) => {
   res.send('rendering new verhchsion');
