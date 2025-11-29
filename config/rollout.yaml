@@ -25,9 +25,9 @@ spec:
   # 5. FIX: Correctly nested strategy
   strategy:
     canary:
-      canaryService: my-backend-canary # <-- Service that points to canary pods
       stableService: my-backend-stable # <-- Service that points to stable pods
-      
+      canaryService: my-backend-canary # <-- Service that points to canary pods
+
       steps:
       - setWeight: 10
       - pause: {}
