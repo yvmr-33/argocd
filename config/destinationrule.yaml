@@ -5,11 +5,13 @@ metadata:
   name: my-backend-rule
   namespace: staging
 spec:
-  host: my-backend-service # <--- VERIFY this matches the host in VirtualService
+  host: my-backend-stable # <--- VERIFY this matches the host in VirtualService
   subsets:
     - name: stable
       labels:
-        app: backend 
+        app: my-backend
+        version: v1 
     - name: canary
       labels:
-        app: backend
+        app: my-backend
+        version: v2
