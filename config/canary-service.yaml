@@ -1,13 +1,16 @@
-# stable-service.yaml
+# canary-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: my-backend-canary
   namespace: staging
+  labels:
+    app: node-backend-app
 spec:
+  type: ClusterIP
   selector:
-    app: my-backend # MUST match the Rollout Pod labels
-    version: v1
+    app: backend # MUST match the Rollout Pod labels
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 3000
