@@ -3,7 +3,6 @@ apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
   name: my-backend-rule
-  namespace: staging
 spec:
   host: my-backend-service # <--- VERIFY this matches the host in VirtualService
   subsets:
