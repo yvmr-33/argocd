@@ -1,19 +1,16 @@
-# service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: n1
-  labels:
-    app: ma # Matches the high-level label on your Deployment
+  name: node-app-service
 spec:
-  # CRITICAL: This selector must match the Pod labels in your Deployment's template
+  # CRITICAL: This selector must match the Pod label (app: node-app)
   selector:
-    app: ma
+    app: node-app
   
-  # NodePort is best for Minikube as it exposes the service externally
+  # NodePort allows external access via a host IP and a high port (e.g., 3xxxx)
   type: NodePort
   ports:
     - protocol: TCP
-      port: 80       # The port the Service listens on internally
-      # CRITICAL: targetPort must match the containerPort (3001)
+      port: 80       # The port the Service listens on
+      # CRITICAL: targetPort must match the containerPort (80)
       targetPort: 80
