@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ma
+  labels:
+    app: ma
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ma
+  template:
+    metadata:
+      labels:
+        app: ma
+    spec:
+      containers:
+      - name: ma
+        image: docker.io/yvmr/np:latest
+        ports:
+        - containerPort: 80
