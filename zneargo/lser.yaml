@@ -11,6 +11,6 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      port: 80       # The port the Service listens on
+      port: 3000      # The port the Service listens on
       # CRITICAL: targetPort must match the containerPort (80)
-      targetPort: 80
+      targetPort: 3000
