@@ -8,7 +8,7 @@ metadata:
     app: node-backend-app
 spec:
   # The ClusterIP is often sufficient if Istio is managing external traffic
-  type: ClusterIP 
+  type: NodePort 
   selector:
     app: backend # MUST match the Rollout Pod labels
   ports:
