@@ -16,7 +16,7 @@ spec:
       # 👇 4. FIX: Containers specification (Required Value)
       containers: 
       - name: node-backend-container
-        image: docker.io/yvmr/np1:latest # Ensure this image exists
+        image: docker.io/yvmr/np:latest # Ensure this image exists
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3000
