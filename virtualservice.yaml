@@ -1,0 +1,23 @@
+# Corrected virtualservice.yaml (Final)
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: my-backend-vs
+  namespace: staging
+spec:
+  hosts:
+    - "*" 
+  gateways:
+    - istio-system/my-gateway # Verify this gateway exists
+  http:
+    - name: primary
+      route:
+        # 1. FIX: Host must be the stableService name
+        - destination:
+            host: my-backend-stable 
+            # Subsets are optional here but often removed for clarity
+          weight: 100 
+        # 2. FIX: Host must be the canaryService name
+        - destination:
+            host: my-backend-canary
+          weight: 0

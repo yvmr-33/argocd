@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: my-backend-rollout
+  namespace: staging # 1. FIX: Explicit Namespace
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: backend # 2. FIX: Selector key
+  template:
+    metadata:
+      labels:
+        app: backend # 3. FIX: Matching Template Label
+    spec:
+      # 👇 4. FIX: Containers specification (Required Value)
+      containers: 
+      - name: node-backend-container
+        image: docker.io/yvmr/np1:latest # Ensure this image exists
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        
+  # 5. FIX: Correctly nested strategy
+  strategy:
+    canary:
+      stableService: my-backend-stable # <-- Service that points to stable pods
+      canaryService: my-backend-canary # <-- Service that points to canary pods
+      
+      trafficRouting:
+        istio:
+          virtualService:
+            name: my-backend-vs
+            routes:
+              - primary
+
+      steps:
+      - setWeight: 10
+      - pause: {}
+      - setWeight: 50
+      - pause: {}
+      - setWeight: 100

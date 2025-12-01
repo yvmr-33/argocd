@@ -1,0 +1,17 @@
+# stable-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-backend-stable
+  namespace: staging
+  labels:
+    app: node-backend-app
+spec:
+  # The ClusterIP is often sufficient if Istio is managing external traffic
+  type: ClusterIP 
+  selector:
+    app: backend # MUST match the Rollout Pod labels
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
